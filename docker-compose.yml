@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile.app
     container_name: fastapi_app
+    restart: always
     networks:
       - app-network
 
@@ -12,8 +13,11 @@ services:
       context: .
       dockerfile: Dockerfile.nginx
     container_name: nginx_proxy
+    restart: always
     ports:
-      - "8080:8080"
+      - "443:443"
+    volumes:
+      - ./ssl:/etc/nginx/ssl:ro
     depends_on:
       - app
     networks:
